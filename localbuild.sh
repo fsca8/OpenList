@@ -2,7 +2,7 @@
 
 set -e 
 
-appName="openlist-with-extensions"
+appName="openlist"
 builtAt="$(date +'%F %T %z')"
 gitAuthor="jenken827 <jenken827@gmail.com>"
 gitCommit=$(git log --pretty=format:"%h" -1)

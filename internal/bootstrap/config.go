@@ -34,11 +34,11 @@ func PWD() string {
 }
 
 func InitConfig() {
-	pwd := PWD()
-	dataDir := flags.DataDir
-	if !filepath.IsAbs(dataDir) {
+	if !filepath.IsAbs(flags.DataDir) {
+		pwd := PWD()
 		flags.DataDir = filepath.Join(pwd, flags.DataDir)
 	}
+	dataDir := flags.DataDir
 	// Determine config file path: use flags.ConfigPath if provided, otherwise default to <dataDir>/config.json
 	configPath := flags.ConfigPath
 	if configPath == "" {
@@ -49,7 +49,7 @@ func InitConfig() {
 			if absPath, err := filepath.Abs(configPath); err == nil {
 				configPath = absPath
 			} else {
-				configPath = filepath.Join(pwd, configPath)
+				configPath = filepath.Join(dataDir, configPath)
 			}
 		}
 	}
@@ -124,7 +124,7 @@ func InitConfig() {
 	// convert abs path
 	convertAbsPath := func(path *string) {
 		if *path != "" && !filepath.IsAbs(*path) {
-			*path = filepath.Join(pwd, *path)
+			*path = filepath.Join(dataDir, *path)
 		}
 	}
 	convertAbsPath(&conf.Conf.Database.DBFile)
